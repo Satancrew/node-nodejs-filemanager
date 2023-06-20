@@ -1,5 +1,6 @@
 import { user } from './findUser.js';
 import { createInterface } from 'readline';
+import { greenText } from './helpers/greenText.js';
 
 const { stdin, stdout } = process;
 
@@ -16,9 +17,9 @@ start.on('line', text => {
 });
 
 if (user) {
-  console.log(`Welcome to the File Manager, ${user}!`)
+  console.log(greenText(`Welcome to the File Manager, ${user}!`))
 } else {
-  console.log(`Enter your username and try again`);
+  console.log(greenText(`Enter your username and try again`));
   start.close();
 }
 
