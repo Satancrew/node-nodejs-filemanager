@@ -1,15 +1,16 @@
 import { argv } from 'process';
 
 const findUser = () => {
-  const args = argv.slice(2); // Игнорируем первые два аргумента, так как они относятся к Node.js
+  const args = argv.slice(2); 
 
-  // Проверяем наличие аргумента --username и возвращаем его значение
-  const usernameArg = args.find(arg => arg.startsWith('--username='));
-  if (usernameArg) {
-    return usernameArg.split('=')[1];
+  const user = args.find(arg => arg.startsWith('--username='));
+
+  if (user) {
+    return user.split('=')[1];
+  } else {
+    return
   }
 
-  return null;
 }
 
 export const user = findUser();

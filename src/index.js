@@ -8,12 +8,20 @@ const start = createInterface({
   outut: stdout,
 });
 
-console.log(`Welcome to the File Manager, ${user}!`);
-
 start.on('line', text => {
   if (text === '.exit') {
-    console.log(`Thank you for using File Manager, ${user}, goodbye!`);
+    console.log(greenText(`Thank you for using File Manager, ${user}, goodbye!`));
     start.close();
   }
 });
+
+if (user) {
+  console.log(`Welcome to the File Manager, ${user}!`)
+} else {
+  console.log(`Enter your username and try again`);
+  start.close();
+}
+
+
+
 
