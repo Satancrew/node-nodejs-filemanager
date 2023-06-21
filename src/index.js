@@ -7,6 +7,9 @@ import { switchDir } from './directory/switchDirectory.js';
 import { list } from './fs/list.js';
 import { parse } from 'path';
 import { wrongOperation } from './helpers/utils/wrongOperation.js';
+import { checkOperation } from './helpers/utils/checkOperation.js';
+import { createFile } from './fs/createFile.js';
+import { removeFile } from './fs/removeFile.js';
 
 const { stdin, stdout } = process;
 
@@ -16,7 +19,10 @@ const start = createInterface({
 });
 
 start.on('line', async operation => {
-  switch (operation) {
+  const command = await checkOperation(operation);
+  let args;
+
+  switch (command) {
     case '.exit':
       console.log(
         greenText(`\nThank you for using File Manager, ${user}, goodbye!`),
@@ -31,17 +37,37 @@ start.on('line', async operation => {
       await list();
       currentDir();
       break;
-    default:
-      if (operation.startsWith('cd')) {
-        const args = operation.split(' ');
-        if (args.length > 2) {
-          await wrongOperation('invalid');
-          currentDir();
-        } else {
-          await switchDir(args[1]);
-          currentDir();
-        }
+    case 'cd':
+      args = operation.split(' ');
+      if (args.length > 2) {
+        await wrongOperation('invalid');
+        currentDir();
+      } else {
+        await switchDir(args[1]);
+        currentDir();
       }
+      break;
+    case 'add':
+      args = operation.split(' ');
+      if (args.length > 2) {
+        await wrongOperation('invalid');
+        currentDir();
+      } else {
+        await createFile(args[1]);
+        currentDir();
+      }
+      break;
+    case 'rm':
+      args = operation.split(' ');
+      if (args.length > 2) {
+        await wrongOperation('invalid');
+        currentDir();
+      } else {
+        await removeFile(args[1]);
+        currentDir();
+      }
+      break;
+    default:
       break;
   }
 });

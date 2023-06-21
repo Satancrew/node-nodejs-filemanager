@@ -8,6 +8,12 @@ export const list = async () => {
     const currDir = cwd();
     const table = [];
     const files = await fs.promises.readdir(currDir, { withFileTypes: true });
+
+    if (files.length === 0) {
+      console.log(redText('\nDirectory is empty\n'));
+      return;
+    }
+
     files.forEach((file, index) => {
       const type = file.isDirectory() ? 'directory' : 'file';
       table.push({ name: file.name, type: type });
