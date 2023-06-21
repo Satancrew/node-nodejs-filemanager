@@ -1,6 +1,6 @@
 import { homedir } from 'os';
 import { chdir } from 'process';
-import { redText } from '../helpers/redText.js';
+import { redText } from '../helpers/coloredText/redText.js';
 
 export const changeHomeDir = async () => {
   try {
