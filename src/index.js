@@ -10,6 +10,7 @@ import { wrongOperation } from './helpers/utils/wrongOperation.js';
 import { checkOperation } from './helpers/utils/checkOperation.js';
 import { createFile } from './fs/createFile.js';
 import { removeFile } from './fs/removeFile.js';
+import { copyFile } from './fs/copyFile.js';
 
 const { stdin, stdout } = process;
 
@@ -39,7 +40,7 @@ start.on('line', async operation => {
       break;
     case 'cd':
       args = operation.split(' ');
-      if (args.length > 2) {
+      if (args.length !== 2) {
         await wrongOperation('invalid');
         currentDir();
       } else {
@@ -49,7 +50,7 @@ start.on('line', async operation => {
       break;
     case 'add':
       args = operation.split(' ');
-      if (args.length > 2) {
+      if (args.length !== 2) {
         await wrongOperation('invalid');
         currentDir();
       } else {
@@ -59,10 +60,31 @@ start.on('line', async operation => {
       break;
     case 'rm':
       args = operation.split(' ');
-      if (args.length > 2) {
+      if (args.length !== 2) {
         await wrongOperation('invalid');
         currentDir();
       } else {
+        await removeFile(args[1]);
+        currentDir();
+      }
+      break;
+    case 'cp': 
+    args = operation.split(' ');
+    if (args.length !== 3) {
+      await wrongOperation('invalid');
+      currentDir();
+    } else {
+      await copyFile(args[1], args[2]);
+      currentDir();
+    }
+    break;
+    case 'mv':
+      args = operation.split(' ');
+      if (args.length !== 3) {
+        await wrongOperation('invalid');
+        currentDir();
+      } else {
+        await copyFile(args[1], args[2]);
         await removeFile(args[1]);
         currentDir();
       }

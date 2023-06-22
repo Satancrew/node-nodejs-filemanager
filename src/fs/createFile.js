@@ -7,7 +7,7 @@ export const createFile = async fileName => {
   try {
     const dir = cwd();
     const filePath = `${dir}/${fileName}`;
-    await fs.promises.writeFile(filePath, fileName);
+    await fs.promises.writeFile(filePath, '');
     console.log(greenText('\nFile created successfully'))
   } catch (error) {
     wrongOperation('invalid');
