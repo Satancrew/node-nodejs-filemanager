@@ -12,6 +12,7 @@ import { createFile } from './fs/createFile.js';
 import { removeFile } from './fs/removeFile.js';
 import { copyFile } from './fs/copyFile.js';
 import { renameFile } from './fs/renameFile.js';
+import { readFile } from './fs/readFile.js';
 
 const { stdin, stdout } = process;
 
@@ -98,6 +99,15 @@ start.on('line', async operation => {
       } else {
         await renameFile(args[1], args[2])
         currentDir();
+      }
+      break;
+    case 'cat':
+      args = operation.split(' ')
+      if (args.length !== 2) {
+        await wrongOperation('invalid');
+        currentDir();
+      } else {
+        await readFile(args[1]);
       }
       break;
     default:
