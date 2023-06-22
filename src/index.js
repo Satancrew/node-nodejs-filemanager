@@ -13,6 +13,7 @@ import { removeFile } from './fs/removeFile.js';
 import { copyFile } from './fs/copyFile.js';
 import { renameFile } from './fs/renameFile.js';
 import { readFile } from './fs/readFile.js';
+import { osParams } from './os/os.js';
 
 const { stdin, stdout } = process;
 
@@ -108,6 +109,16 @@ start.on('line', async operation => {
         currentDir();
       } else {
         await readFile(args[1]);
+      }
+      break;
+    case 'os':
+      args = operation.split(' ');
+      if (args.length !== 2) {
+        await wrongOperation('invalid');
+        currentDir();
+      } else {
+        await osParams(args[1]);
+        currentDir();
       }
       break;
     default:
