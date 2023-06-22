@@ -11,6 +11,7 @@ import { checkOperation } from './helpers/utils/checkOperation.js';
 import { createFile } from './fs/createFile.js';
 import { removeFile } from './fs/removeFile.js';
 import { copyFile } from './fs/copyFile.js';
+import { renameFile } from './fs/renameFile.js';
 
 const { stdin, stdout } = process;
 
@@ -68,16 +69,16 @@ start.on('line', async operation => {
         currentDir();
       }
       break;
-    case 'cp': 
-    args = operation.split(' ');
-    if (args.length !== 3) {
-      await wrongOperation('invalid');
-      currentDir();
-    } else {
-      await copyFile(args[1], args[2]);
-      currentDir();
-    }
-    break;
+    case 'cp':
+      args = operation.split(' ');
+      if (args.length !== 3) {
+        await wrongOperation('invalid');
+        currentDir();
+      } else {
+        await copyFile(args[1], args[2]);
+        currentDir();
+      }
+      break;
     case 'mv':
       args = operation.split(' ');
       if (args.length !== 3) {
@@ -86,6 +87,16 @@ start.on('line', async operation => {
       } else {
         await copyFile(args[1], args[2]);
         await removeFile(args[1]);
+        currentDir();
+      }
+      break;
+    case 'rn':
+      args = operation.split(' ');
+      if (args.length !== 3) {
+        await wrongOperation('invalid');
+        currentDir();
+      } else {
+        await renameFile(args[1], args[2])
         currentDir();
       }
       break;
