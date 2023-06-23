@@ -14,6 +14,7 @@ import { copyFile } from './fs/copyFile.js';
 import { renameFile } from './fs/renameFile.js';
 import { readFile } from './fs/readFile.js';
 import { osParams } from './os/os.js';
+import { calculateHash } from './hash/calculateHash.js';
 
 const { stdin, stdout } = process;
 
@@ -98,12 +99,12 @@ start.on('line', async operation => {
         await wrongOperation('invalid');
         currentDir();
       } else {
-        await renameFile(args[1], args[2])
+        await renameFile(args[1], args[2]);
         currentDir();
       }
       break;
     case 'cat':
-      args = operation.split(' ')
+      args = operation.split(' ');
       if (args.length !== 2) {
         await wrongOperation('invalid');
         currentDir();
@@ -118,6 +119,16 @@ start.on('line', async operation => {
         currentDir();
       } else {
         await osParams(args[1]);
+        currentDir();
+      }
+      break;
+    case 'hash':
+      args = operation.split(' ');
+      if (args.length !== 2) {
+        await wrongOperation('invalid');
+        currentDir();
+      } else {
+        await calculateHash(args[1]);
         currentDir();
       }
       break;
