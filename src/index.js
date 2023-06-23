@@ -136,7 +136,6 @@ start.on('line', async operation => {
       break;
     case 'compress':
       args = operation.split(' ');
-      console.log(args);
       if (args.length !== 3) {
         await wrongOperation('invalid');
         currentDir();
@@ -146,7 +145,6 @@ start.on('line', async operation => {
       break;
     case 'decompress':
       args = operation.split(' ');
-      console.log(args);
       if (args.length !== 3) {
         await wrongOperation('invalid');
         currentDir();

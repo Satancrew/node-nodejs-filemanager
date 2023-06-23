@@ -17,8 +17,6 @@ export const decompress = async (pathToFile, destinationDirectory) => {
     }
 
     const fileName = path.basename(copyFrom, '.br');
-    console.log(fileName);
-
     const pathToFileCopy = path.join(copyTo, `${fileName}.txt`);
 
     const sourceStream = fs.createReadStream(copyFrom);

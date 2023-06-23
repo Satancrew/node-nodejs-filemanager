@@ -17,7 +17,6 @@ export const compress = async (pathToFile, destinationDirectory) => {
     }
 
     const fileName = path.basename(copyFrom);
-
     const pathToFileCopy = path.join(copyTo, `${path.parse(fileName).name}.br`);
 
     const sourceStream = fs.createReadStream(copyFrom);
