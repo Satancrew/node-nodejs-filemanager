@@ -5,7 +5,6 @@ import { currentDir } from './directory/currentDirectory.js';
 import { changeHomeDir } from './directory/changeHomeDirectory.js';
 import { switchDir } from './directory/switchDirectory.js';
 import { list } from './fs/list.js';
-import { parse } from 'path';
 import { wrongOperation } from './helpers/utils/wrongOperation.js';
 import { checkOperation } from './helpers/utils/checkOperation.js';
 import { createFile } from './fs/createFile.js';
@@ -27,7 +26,7 @@ const start = createInterface({
 
 start.on('line', async operation => {
   const command = await checkOperation(operation);
-  let args;
+  let args = operation.split(' ');
 
   switch (command) {
     case '.exit':
@@ -45,7 +44,6 @@ start.on('line', async operation => {
       currentDir();
       break;
     case 'cd':
-      args = operation.split(' ');
       if (args.length !== 2) {
         await wrongOperation('invalid');
         currentDir();
@@ -55,7 +53,6 @@ start.on('line', async operation => {
       }
       break;
     case 'add':
-      args = operation.split(' ');
       if (args.length !== 2) {
         await wrongOperation('invalid');
         currentDir();
@@ -65,7 +62,6 @@ start.on('line', async operation => {
       }
       break;
     case 'rm':
-      args = operation.split(' ');
       if (args.length !== 2) {
         await wrongOperation('invalid');
         currentDir();
@@ -75,7 +71,6 @@ start.on('line', async operation => {
       }
       break;
     case 'cp':
-      args = operation.split(' ');
       if (args.length !== 3) {
         await wrongOperation('invalid');
         currentDir();
@@ -85,7 +80,6 @@ start.on('line', async operation => {
       }
       break;
     case 'mv':
-      args = operation.split(' ');
       if (args.length !== 3) {
         await wrongOperation('invalid');
         currentDir();
@@ -96,7 +90,6 @@ start.on('line', async operation => {
       }
       break;
     case 'rn':
-      args = operation.split(' ');
       if (args.length !== 3) {
         await wrongOperation('invalid');
         currentDir();
@@ -106,7 +99,6 @@ start.on('line', async operation => {
       }
       break;
     case 'cat':
-      args = operation.split(' ');
       if (args.length !== 2) {
         await wrongOperation('invalid');
         currentDir();
@@ -115,7 +107,6 @@ start.on('line', async operation => {
       }
       break;
     case 'os':
-      args = operation.split(' ');
       if (args.length !== 2) {
         await wrongOperation('invalid');
         currentDir();
@@ -125,7 +116,6 @@ start.on('line', async operation => {
       }
       break;
     case 'hash':
-      args = operation.split(' ');
       if (args.length !== 2) {
         await wrongOperation('invalid');
         currentDir();
@@ -135,7 +125,6 @@ start.on('line', async operation => {
       }
       break;
     case 'compress':
-      args = operation.split(' ');
       if (args.length !== 3) {
         await wrongOperation('invalid');
         currentDir();
@@ -144,17 +133,23 @@ start.on('line', async operation => {
       }
       break;
     case 'decompress':
-      args = operation.split(' ');
       if (args.length !== 3) {
         await wrongOperation('invalid');
         currentDir();
       } else {
-        await decompress(args[1], args[2])
+        await decompress(args[1], args[2]);
       }
       break;
     default:
       break;
   }
+});
+
+process.on('SIGINT', () => {
+  console.log(
+    greenText(`\nThank you for using File Manager, ${user}, goodbye!\n`),
+  );
+  process.exit();
 });
 
 if (user) {
