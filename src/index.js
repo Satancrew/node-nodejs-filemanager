@@ -15,6 +15,8 @@ import { renameFile } from './fs/renameFile.js';
 import { readFile } from './fs/readFile.js';
 import { osParams } from './os/os.js';
 import { calculateHash } from './hash/calculateHash.js';
+import { compress } from './zip/compress.js';
+import { decompress } from './zip/decompress.js';
 
 const { stdin, stdout } = process;
 
@@ -130,6 +132,26 @@ start.on('line', async operation => {
       } else {
         await calculateHash(args[1]);
         currentDir();
+      }
+      break;
+    case 'compress':
+      args = operation.split(' ');
+      console.log(args);
+      if (args.length !== 3) {
+        await wrongOperation('invalid');
+        currentDir();
+      } else {
+        await compress(args[1], args[2]);
+      }
+      break;
+    case 'decompress':
+      args = operation.split(' ');
+      console.log(args);
+      if (args.length !== 3) {
+        await wrongOperation('invalid');
+        currentDir();
+      } else {
+        await decompress(args[1], args[2])
       }
       break;
     default:
