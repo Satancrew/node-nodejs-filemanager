@@ -13,7 +13,7 @@ export const compress = async (pathToFile, destinationDirectory) => {
     const copyTo = await checkPath(destinationDirectory);
 
     if (!fs.existsSync(copyTo)) {
-      fs.mkdirSync(copyTo, { recursive: true });
+      fs.mkdir(copyTo, { recursive: true });
     }
 
     const fileName = path.basename(copyFrom);

@@ -6,17 +6,16 @@ import { checkPath } from '../helpers/utils/checkPath.js';
 
 export const copyFile = async (pathToFile, destinationDirectory) => {
   try {
-
     const copyFrom = await checkPath(pathToFile);
     const copyTo = await checkPath(destinationDirectory);
 
     if (!fs.existsSync(copyFrom)) {
-      wrongOperation('invalid')
-      return
+      wrongOperation('invalid');
+      return;
     }
 
     if (!fs.existsSync(copyTo)) {
-      fs.mkdirSync(copyTo, { recursive: true });
+      fs.mkdir(copyTo, { recursive: true });
     }
 
     const fileName = path.basename(pathToFile);
@@ -27,12 +26,12 @@ export const copyFile = async (pathToFile, destinationDirectory) => {
 
     sourceStream.on('error', error => {
       wrongOperation('invalid');
-      return
+      return;
     });
 
     destinationStream.on('error', error => {
-      wrongOperation('invalid')
-      return
+      wrongOperation('invalid');
+      return;
     });
 
     await sourceStream.pipe(destinationStream);
