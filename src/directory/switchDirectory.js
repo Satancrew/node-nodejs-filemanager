@@ -1,7 +1,5 @@
 import process from 'process';
 import { homedir } from 'os';
-import path from 'path';
-import { redText } from '../helpers/coloredText/redText.js';
 import { wrongOperation } from '../helpers/utils/wrongOperation.js';
 
 export const switchDir = async (path) => {
